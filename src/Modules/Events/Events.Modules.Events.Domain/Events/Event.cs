@@ -1,4 +1,6 @@
-﻿using Evently.Modules.Events.Domain.Abstractions;
+﻿
+using Evently.Common.Domain;
+using Evently.Modules.Events.Domain.Categories;
 
 namespace Evently.Modules.Events.Domain.Events;
 
@@ -18,7 +20,9 @@ public sealed class Event:Entity
     public DateTime? EndsAtUtc { get; private set; }
     public EventStatus Status { get; private set; }
 
-    public static ResponseWrapper<Event> Create(string title,
+    public static ResponseWrapper<Event> Create(
+        Category category,
+        string title,
         string description,
         string location,
         DateTime startsAtUtc,
@@ -26,12 +30,13 @@ public sealed class Event:Entity
     {
         if (endsAtUtc.HasValue && endsAtUtc < startsAtUtc)
         {
-           return ResponseWrapper<Event>.Fail("Invalid date range (ending date must be greater than starting date)");
+           return ResponseWrapper<Event>.Fail(EventErrors.EndDatePrecedesStartDate);
         }
         var @event = new Event
         {
             Id = Guid.NewGuid(),
             Title=title,
+            CategoryId = category.Id,
             Description=description,
             Location = location,
             StartsAtUtc = startsAtUtc,
@@ -46,7 +51,7 @@ public sealed class Event:Entity
     {
         if (Status != EventStatus.Draft)
         {
-            return ResponseWrapper<Event>.Fail("Not Drafted");
+            return ResponseWrapper<Event>.Fail(EventErrors.NotDraft);
         }
 
         Status = EventStatus.Published;
@@ -70,12 +75,12 @@ public sealed class Event:Entity
     {
         if (Status == EventStatus.Canceled)
         {
-            return ResponseWrapper<Event>.Fail(" Event Already cancelled");
+            return ResponseWrapper<Event>.Fail(EventErrors.AlreadyCanceled);
         }
 
         if (StartsAtUtc < utcNow)
         {
-            return ResponseWrapper<Event>.Fail("Event Already started");
+            return ResponseWrapper<Event>.Fail(EventErrors.AlreadyStarted);
         }
 
         Status = EventStatus.Canceled;

@@ -1,6 +1,6 @@
-﻿using Evently.Modules.Events.Application.Abstractions.Data;
-using Evently.Modules.Events.Application.Abstractions.Messaging;
-using Evently.Modules.Events.Domain.Abstractions;
+﻿using Evently.Common.Application.Messaging;
+using Evently.Common.Domain;
+using Evently.Modules.Events.Application.Abstractions.Data;
 using Evently.Modules.Events.Domain.Categories;
 
 namespace Evently.Modules.Events.Application.Categories.ArchiveCategory;
@@ -13,11 +13,11 @@ internal sealed class ArchiveCategoryCommandHandler(ICategoryRepository category
         Category? category = await categoryRepository.GetAsync(request.CategoryId, cancellationToken);
         if (category is null)
         {
-            return ResponseWrapper<Category>.Fail($"Category with id {request.CategoryId} is not found");
+            return ResponseWrapper<Category>.Fail(CategoryErrors.NotFound(request.CategoryId));
         }
         if (category.IsArchived)
         {
-            return ResponseWrapper<Category>.Fail("Already archived");
+            return ResponseWrapper<Category>.Fail(CategoryErrors.AlreadyArchived);
         }
 
         category.Archive();

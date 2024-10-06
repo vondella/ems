@@ -1,8 +1,10 @@
 ﻿using Dapper;
 using Evently.Modules.Events.Application.Abstractions.Data;
-using Evently.Modules.Events.Application.Abstractions.Messaging;
-using Evently.Modules.Events.Domain.Abstractions;
 using System.Data.Common;
+using Evently.Common.Application.Data;
+using Evently.Common.Application.Messaging;
+using Evently.Common.Domain;
+using Evently.Modules.Events.Domain.Categories;
 
 namespace Evently.Modules.Events.Application.Categories.GetCategory;
 
@@ -24,7 +26,7 @@ internal sealed class GetCategoryQueryHandler(IDbConnectionFactory dbConnectionF
         CategoryResponse? category = await connection.QuerySingleOrDefaultAsync<CategoryResponse>(sql, request);
         if (category is null)
         {
-            return ResponseWrapper<CategoryResponse>.Fail($"Category with Id {request.CategoryId} is not found");
+            return ResponseWrapper<CategoryResponse>.Fail(CategoryErrors.NotFound(category.Id));
         }
 
         return ResponseWrapper<CategoryResponse>.Success(category);

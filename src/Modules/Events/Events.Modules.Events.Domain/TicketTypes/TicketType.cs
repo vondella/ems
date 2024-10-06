@@ -1,4 +1,4 @@
-﻿using Evently.Modules.Events.Domain.Abstractions;
+﻿using Evently.Common.Domain;
 using Evently.Modules.Events.Domain.Events;
 
 namespace Evently.Modules.Events.Domain.TicketTypes;
@@ -26,6 +26,7 @@ public sealed  class TicketType:Entity
         var ticketType = new TicketType
         {
             Id = Guid.NewGuid(),
+            EventId = @event.Id,
             Name=name,
             Price=price,
             Currency = currency,

@@ -1,7 +1,7 @@
-﻿using Evently.Modules.Events.Application.Abstractions.Clock;
+﻿using Evently.Common.Application.Clock;
+using Evently.Common.Application.Messaging;
+using Evently.Common.Domain;
 using Evently.Modules.Events.Application.Abstractions.Data;
-using Evently.Modules.Events.Application.Abstractions.Messaging;
-using Evently.Modules.Events.Domain.Abstractions;
 using Evently.Modules.Events.Domain.Events;
 
 namespace Evently.Modules.Events.Application.Events.RescheduleEvent;
@@ -17,12 +17,12 @@ internal sealed class RescheduleEventCommandHandler(
         Event? @event = await eventRepository.GetAsync(request.EventId, cancellationToken);
         if (@event is null)
         {
-            return ResponseWrapper<Event>.Fail($"Evnt with Id {request.EventId}");
+            return ResponseWrapper<Event>.Fail(EventErrors.NotFound(request.EventId));
         }
 
         if (request.StartsAtUtc < dateTimeProvider.UtcNow)
         {
-            return ResponseWrapper<Event>.Fail("invalid date range");
+            return ResponseWrapper<Event>.Fail(EventErrors.StartDateInPast);
         }
 
         @event.Reschedule(request.StartsAtUtc, request.EndsAtUtc);

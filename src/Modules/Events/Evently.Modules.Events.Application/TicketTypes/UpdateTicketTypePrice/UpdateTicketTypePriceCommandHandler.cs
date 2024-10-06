@@ -1,6 +1,6 @@
-﻿using Evently.Modules.Events.Application.Abstractions.Data;
-using Evently.Modules.Events.Application.Abstractions.Messaging;
-using Evently.Modules.Events.Domain.Abstractions;
+﻿using Evently.Common.Application.Messaging;
+using Evently.Common.Domain;
+using Evently.Modules.Events.Application.Abstractions.Data;
 using Evently.Modules.Events.Domain.TicketTypes;
 
 namespace Evently.Modules.Events.Application.TicketTypes.UpdateTicketTypePrice;
@@ -15,7 +15,7 @@ internal sealed class UpdateTicketTypePriceCommandHandler(
         TicketType? ticketType = await ticketTypeRepository.GetAsync(request.TicketTypeId, cancellationToken);
         if (ticketType is null)
         {
-            return ResponseWrapper<Guid>.Fail($"No ticket with id {request.TicketTypeId} is found");
+            return ResponseWrapper<Guid>.Fail(TicketTypeErrors.NotFound(request.TicketTypeId));
         }
 
         ticketType.UpdatePrice(request.Price);

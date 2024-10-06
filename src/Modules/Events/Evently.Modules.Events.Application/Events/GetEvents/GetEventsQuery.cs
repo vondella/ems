@@ -1,5 +1,4 @@
-﻿using Evently.Modules.Events.Application.Abstractions.Messaging;
-using Evently.Modules.Events.Application.Events.GetEvent;
+﻿using Evently.Common.Application.Messaging;
 
 namespace Evently.Modules.Events.Application.Events.GetEvents;
 

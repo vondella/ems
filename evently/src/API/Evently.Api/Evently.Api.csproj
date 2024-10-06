@@ -12,15 +12,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="8.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.8">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.5" />
+    <PackageReference Include="Serilog.AspNetCore" Version="8.0.2" />
+    <PackageReference Include="Serilog.Sinks.Seq" Version="8.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\src\Modules\Events\Evently.Modules.Events.Infrastracture\Evently.Modules.Events.Infrastracture.csproj" />
+    <ProjectReference Include="..\..\..\..\src\Modules\Users\Evently.Modules.Users.Infrastracture\Evently.Modules.Users.Infrastracture.csproj" />
+    <ProjectReference Include="..\..\..\..\src\Ticketing\Evently.Modules.Ticketing.Infrastracture\Evently.Modules.Ticketing.Infrastracture.csproj" />
   </ItemGroup>
 
 </Project>

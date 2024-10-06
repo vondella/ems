@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Common\Evently.Common.Application\Evently.Common.Application.csproj" />
+    <ProjectReference Include="..\..\Events\Evently.Modules.Events.PublicApi\Evently.Modules.Events.PublicApi.csproj" />
+    <ProjectReference Include="..\..\Users\Evently.Modules.Users.PublicApi\Evently.Modules.Users.PublicApi.csproj" />
+    <ProjectReference Include="..\Evently.Modules.Ticketing.Domain\Evently.Modules.Ticketing.Domain.csproj" />
+    <ProjectReference Include="..\Evently.Modules.Ticketing.PublicApi\Evently.Modules.Ticketing.PublicApi.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Abstractions\Data\" />
+    <Folder Include="Carts\AddItemToCart\" />
+    <Folder Include="Customers\CreateCustomer\" />
+    <Folder Include="Customers\UpdateCustomer\" />
+    <Folder Include="Events\CancelEvent\" />
+    <Folder Include="Events\RescheduleEvent\" />
+    <Folder Include="Orders\GetOrders\" />
+    <Folder Include="Payments\RefundPaymentForEvent\" />
+    <Folder Include="Payments\RefundPayment\" />
+    <Folder Include="Tickets\CreateTicketBatch\" />
+    <Folder Include="Tickets\GetTicketByCode\" />
+    <Folder Include="TicketTypes\UpdateTicketTypePrice\" />
+  </ItemGroup>
+
+</Project>

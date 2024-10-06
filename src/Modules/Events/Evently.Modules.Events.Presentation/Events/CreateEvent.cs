@@ -1,30 +1,48 @@
-﻿using Evently.Modules.Events.Application.Events;
+﻿using Asp.Versioning.Builder;
+using Carter;
+using Evently.Common.Application.Extensions;
+using Evently.Common.Domain;
 using Evently.Modules.Events.Application.Events.CreateEvent;
+using Evently.Modules.Events.Domain.Categories;
+using Mapster;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Routing;
 
 namespace Evently.Modules.Events.Presentation.Events;
 
-internal static class CreateEvent
+public  class CreateEvent:ICarterModule
 {
-    public static void MapEndPoint(IEndpointRouteBuilder app)
+
+    public record CreateEventRequest(
+        Guid CategoryId,
+        string Title,
+        string Description,
+        string Location,
+        DateTime StartsAtUtc,
+        DateTime EndsAtUtc
+    );
+
+    public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapPost("events", async (Request request,ISender sender ) =>
-        {
-            var command = new CreateEventCommand(request.Title,request.Description,request.Location,request.StartsAtUtc,request.EndsAtUtc);
-            Guid @eventId = await sender.Send(command);
-            return Results.Ok(@eventId);
-        }).WithTags(Tags.Events);
+        ApiVersionSet apiVersionSet = app.VersionSets();
+
+        app.MapPost("/api/v{version:apiVersion}/events", CreateEvents)
+            .WithName("create Event")
+            .WithSummary("create Event")
+            .WithDescription("create Event")
+            .Produces<ResponseWrapper<Guid>>(StatusCodes.Status200OK)
+            .ProducesProblem(StatusCodes.Status400BadRequest)
+            //.RequireAuthorization()
+            .WithApiVersionSet(apiVersionSet)
+            .MapToApiVersion(1);
     }
-    internal sealed class Request
+    public static async Task<Results<Ok<ResponseWrapper<Guid>>, BadRequest<string>>> CreateEvents(CreateEventRequest request, ISender sender)
     {
-        public Guid Id { get; private set; }
-        public string Title { get; private set; }
-        public string Description { get; private set; }
-        public string Location { get; private set; }
-        public DateTime StartsAtUtc { get; private set; }
-        public DateTime EndsAtUtc { get; private set; }
+        var command = request.Adapt<CreateEventCommand>();
+        var result = await sender.Send(command);
+        return TypedResults.Ok(result);
     }
 }

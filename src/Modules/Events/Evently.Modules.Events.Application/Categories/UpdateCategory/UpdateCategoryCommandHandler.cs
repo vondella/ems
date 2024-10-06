@@ -1,6 +1,6 @@
-﻿using Evently.Modules.Events.Application.Abstractions.Data;
-using Evently.Modules.Events.Application.Abstractions.Messaging;
-using Evently.Modules.Events.Domain.Abstractions;
+﻿using Evently.Common.Application.Messaging;
+using Evently.Common.Domain;
+using Evently.Modules.Events.Application.Abstractions.Data;
 using Evently.Modules.Events.Domain.Categories;
 
 namespace Evently.Modules.Events.Application.Categories.UpdateCategory;
@@ -13,7 +13,7 @@ internal sealed class UpdateCategoryCommandHandler(ICategoryRepository categoryR
         Category? category = await categoryRepository.GetAsync(request.CategoryId, cancellationToken);
         if (category is null)
         {
-            return ResponseWrapper<Category>.Fail($"category with Id {request.CategoryId} is not found");
+            return ResponseWrapper<Category>.Fail(CategoryErrors.NotFound(category.Id));
         }
         category.ChangeName(request.Name);
 

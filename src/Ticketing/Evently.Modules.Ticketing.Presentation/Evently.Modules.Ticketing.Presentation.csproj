@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\Evently.Common.Presentation\Evently.Common.Presentation.csproj" />
+    <ProjectReference Include="..\..\Modules\Events\Evently.Modules.Events.IntegrationEvents\Evently.Modules.Events.IntegrationEvents.csproj" />
+    <ProjectReference Include="..\..\Modules\Ticketing\Evently.Modules.Ticketing.Application\Evently.Modules.Ticketing.Application.csproj" />
+    <ProjectReference Include="..\..\Modules\Users\Evently.Modules.Users.IntegrationEvent\Evently.Modules.Users.IntegrationEvent.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Carts\" />
+  </ItemGroup>
+
+</Project>

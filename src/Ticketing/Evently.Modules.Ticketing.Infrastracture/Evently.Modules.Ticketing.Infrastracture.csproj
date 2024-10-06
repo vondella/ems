@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\Evently.Common.Infrastracture\Evently.Common.Infrastracture.csproj" />
+    <ProjectReference Include="..\..\Modules\Ticketing\Evently.Modules.Ticketing.Application\Evently.Modules.Ticketing.Application.csproj" />
+    <ProjectReference Include="..\..\Modules\Ticketing\Evently.Modules.Ticketing.PublicApi\Evently.Modules.Ticketing.PublicApi.csproj" />
+    <ProjectReference Include="..\Evently.Modules.Ticketing.Presentation\Evently.Modules.Ticketing.Presentation.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Database\" />
+    <Folder Include="Events\" />
+    <Folder Include="Inbox\" />
+    <Folder Include="Outbox\" />
+    <Folder Include="Payments\" />
+    <Folder Include="Orders\" />
+    <Folder Include="PublicApi\" />
+  </ItemGroup>
+
+</Project>

@@ -1,4 +1,8 @@
-﻿using Evently.Modules.Events.Application.Events;
+﻿using Asp.Versioning.Builder;
+using Carter;
+using Evently.Common.Application.Extensions;
+using Evently.Common.Domain;
+using Evently.Modules.Events.Application.Events;
 using Evently.Modules.Events.Application.Events.GetEvent;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -7,17 +11,22 @@ using Microsoft.AspNetCore.Routing;
 
 namespace Evently.Modules.Events.Presentation.Events;
 
-internal  static class GetEvent
+public  class GetEvent:ICarterModule
 {
-    public static void MapEndPoint(IEndpointRouteBuilder app)
+    public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapGet("events/{id}", async (Guid id,ISender sender) =>
+        ApiVersionSet apiVersionSet = app.VersionSets();
+        app.MapGet("/api/v{version:apiVersion}/events/{id}", async (Guid id, ISender sender) =>
         {
-            EventResponse @event = await sender.Send(new GetEventQuery(id));
-            //EventResponse? @event = await context.Events.Where(e => e.Id == id)
-            //    .Select(e => new EventResponse(e.Id,
-            //        e.Title, e.Description,e.Location,e.StartsAtUtc,e.EndsAtUtc)).SingleOrDefaultAsync();
-            return @event is null ? Results.NotFound() : Results.Ok(@event);
-        }).WithTags(Tags.Events);
+            var results = await sender.Send(new GetEventQuery(id));
+            return Results.Ok(results);
+        }).WithName("Get Event")
+        .WithSummary("Get Event")
+        .WithDescription("Get Event")
+        .Produces<ResponseWrapper<EventResponse>>(StatusCodes.Status200OK)
+        .ProducesProblem(StatusCodes.Status400BadRequest)
+        //.RequireAuthorization()
+        .WithApiVersionSet(apiVersionSet)
+        .MapToApiVersion(1);
     }
 }

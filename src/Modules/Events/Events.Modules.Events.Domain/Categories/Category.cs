@@ -1,4 +1,4 @@
-﻿using Evently.Modules.Events.Domain.Abstractions;
+﻿using Evently.Common.Domain;
 
 namespace Evently.Modules.Events.Domain.Categories;
 
@@ -26,7 +26,7 @@ public sealed class Category:Entity
 
     public void Archive()
     {
-        IsArchived = false;
+        IsArchived = true;
         Raise(new CategoryArchivedDomainEvent(Id));
     }
 
