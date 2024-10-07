@@ -7,6 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Common\Evently.Common.Infrastracture\Evently.Common.Infrastracture.csproj" />
+    <ProjectReference Include="..\..\Evently.Modules.Attendance.Presentation\Evently.Modules.Attendance.Presentation.csproj" />
+    <ProjectReference Include="..\..\Events\Evently.Modules.Events.IntegrationEvents\Evently.Modules.Events.IntegrationEvents.csproj" />
+    <ProjectReference Include="..\..\Ticketing\Evently.Modules.Ticketing.IntegrationEvents\Evently.Modules.Ticketing.IntegrationEvents.csproj" />
+    <ProjectReference Include="..\..\Users\Evently.Modules.Users.Infrastracture\Evently.Modules.Users.Infrastracture.csproj" />
     <ProjectReference Include="..\Evently.Modules.Attendance.Application\Evently.Modules.Attendance.Application.csproj" />
   </ItemGroup>
 
@@ -14,6 +19,9 @@
     <Folder Include="Attendees\" />
     <Folder Include="Database\" />
     <Folder Include="Events\" />
+    <Folder Include="Authentication\" />
+    <Folder Include="Tickets\" />
+    <Folder Include="Outbox\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -2,6 +2,7 @@ using Carter;
 using Evently.Api.Extensions;
 using Evently.Common.Application;
 using Evently.Common.Infrastracture;
+using Evently.Modules.Attendance.Infrastracture;
 using Evently.Modules.Events.Infrastracture;
 using Evently.Modules.Events.Infrastracture.Database;
 using Evently.Modules.Ticketing.Infrastracture;
@@ -19,7 +20,8 @@ MongoConfig mongoConfig = builder.Configuration.GetSection(nameof(MongoConfig)).
 // Add services to the container.
 builder.Services.AddApplication([Evently.Modules.Events.Application.AssemblyReference.Assembly,
     Evently.Modules.Users.Application.AssemblyReference.Assembly,
-    Evently.Modules.Ticketing.Application.AssemblyReference.Assembly]);
+    Evently.Modules.Ticketing.Application.AssemblyReference.Assembly,
+    Evently.Modules.Attendance.Application.AssemblyReference.Assembly]);
 
 
 builder.Services.AddInfrastracture([EventModule.ConfigureConsumers(new MongoConfig
@@ -27,12 +29,14 @@ builder.Services.AddInfrastracture([EventModule.ConfigureConsumers(new MongoConf
          Database = mongoConfig!.Database,
          Collection = mongoConfig.Collection,
          ConnectionString = mongoConfig.ConnectionString
-    }),TicketingModule.ConfigureConsumers
+    }),TicketingModule.ConfigureConsumers,AttendanceModule.ConfigureConsumers
  ],databaseConnectionString!,redisConnectionString);
-builder.Configuration.AddModuleConfiguration(["events","users","ticketing"]);
+
+builder.Configuration.AddModuleConfiguration(["events","users","ticketing", "attendance"]);
 builder.Services.AddEventsModule(builder.Configuration);
 builder.Services.AddUsersModule(builder.Configuration);
 builder.Services.AddTicketingModule(builder.Configuration);
+builder.Services.AddAttendanceModule(builder.Configuration);
 
 builder.Services.AddHealthChecks()
     .AddNpgSql(databaseConnectionString)
@@ -41,13 +45,13 @@ builder.Services.AddHealthChecks()
 WebApplication app = builder.Build();
 app.UseSerilogRequestLogging();
 app.UseApplication();
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.ApplyMigrations();
 }
 app.MapCarter();
-
 app.MapHealthChecks("health", new HealthCheckOptions
 {
     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse

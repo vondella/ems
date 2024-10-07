@@ -9,13 +9,15 @@
   <ItemGroup>
     <Folder Include="Abstractions\Authentication\" />
     <Folder Include="Abstractions\Data\" />
-    <Folder Include="Attendees\" />
-    <Folder Include="Events\" />
-    <Folder Include="EventStatistics\" />
-    <Folder Include="Tickets\" />
+    <Folder Include="Attendees\CheckInAttendee\" />
+    <Folder Include="Attendees\CreateAttendee\" />
+    <Folder Include="Attendees\UpdateAttendee\" />
+    <Folder Include="EventStatistics\Projections\" />
+    <Folder Include="Tickets\CreateTicket\" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Common\Evently.Common.Application\Evently.Common.Application.csproj" />
     <ProjectReference Include="..\Evently.Modules.Attendance.Domain\Evently.Modules.Attendance.Domain.csproj" />
   </ItemGroup>
 

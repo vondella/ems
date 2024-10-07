@@ -1,4 +1,5 @@
 ﻿using Evently.Modules.Attendance.Domain.Attendee;
+using Evently.Modules.Attendance.Infrastracture.Database;
 
 namespace Evently.Modules.Attendance.Infrastracture.Attendees;
 

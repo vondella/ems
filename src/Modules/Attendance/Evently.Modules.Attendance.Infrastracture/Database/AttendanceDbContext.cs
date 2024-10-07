@@ -1,9 +1,12 @@
-﻿using Evently.Modules.Attendance.Application.Abstractions.Data;
+﻿using Evently.Common.Infrastracture.Inbox;
+using Evently.Common.Infrastracture.Outbox;
+using Evently.Modules.Attendance.Application.Abstractions.Data;
 using Evently.Modules.Attendance.Domain.Attendee;
 using Evently.Modules.Attendance.Domain.Events;
 using Evently.Modules.Attendance.Domain.Tickets;
 using Evently.Modules.Attendance.Infrastracture.Attendees;
 using Evently.Modules.Attendance.Infrastracture.Events;
+using Evently.Modules.Attendance.Infrastracture.Tickets;
 using Microsoft.EntityFrameworkCore;
 
 namespace Evently.Modules.Attendance.Infrastracture.Database;
@@ -32,5 +35,4 @@ public sealed class AttendanceDbContext(DbContextOptions<AttendanceDbContext> op
         modelBuilder.ApplyConfiguration(new TicketConfiguration());
         modelBuilder.ApplyConfiguration(new EventStatisticsConfiguration());
     }
-}
 }

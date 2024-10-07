@@ -1,0 +1,22 @@
+{
+  //"ConnectionStrings": {
+  //  "Database": "Host=evently.database;Port=5432;Database=evently;Username=postgres;Password=postgres;Include Error Detail=true"
+  //},
+  //"Logging": {
+  //  "LogLevel": {
+  //    "Default": "Information",
+  //    "Microsoft.AspNetCore": "Warning"
+  //  }
+  //}
+
+  "Attendance": {
+    "Outbox": {
+      "IntervalInSeconds": 5,
+      "BatchSize": 50
+    },
+    "Inbox": {
+      "IntervalInSeconds": 5,
+      "BatchSize": 50
+    }
+  }
+}

@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\src\Modules\Attendance\Evently.Modules.Attendance.Infrastracture\Evently.Modules.Attendance.Infrastracture.csproj" />
     <ProjectReference Include="..\..\..\..\src\Modules\Events\Evently.Modules.Events.Infrastracture\Evently.Modules.Events.Infrastracture.csproj" />
     <ProjectReference Include="..\..\..\..\src\Modules\Users\Evently.Modules.Users.Infrastracture\Evently.Modules.Users.Infrastracture.csproj" />
     <ProjectReference Include="..\..\..\..\src\Ticketing\Evently.Modules.Ticketing.Infrastracture\Evently.Modules.Ticketing.Infrastracture.csproj" />
