@@ -15,8 +15,8 @@ jobs:
      runs-on: ubuntu-latest
      
      defaults:
-       run:
-         working-directory:Evently
+      run:
+         working-directory:evently
          
      steps:
        - uses: actions/checkout@v4
@@ -26,13 +26,13 @@ jobs:
            dotnet-version: ${{ env.DOTNET_VERSION}}
        - name : Restore
        
-         run: dotnet restore Evently.sln
+         run: dotnet restore evently.sln
        - name : Build
-         run : dotnet build Evently.sln  --configuration Release --no-restore
+         run : dotnet build evently.sln  --configuration Release --no-restore
        - name: test
-         run : dotnet test Evently.sln --configuration Release --no-restore --no-build
+         run : dotnet test evently.sln --configuration Release --no-restore --no-build
        - name: publish
-         run: dotnet publish Evently.sln --configuration Release --no-restore --no-build
+         run: dotnet publish evently.sln --configuration Release --no-restore --no-build
   
 
 
