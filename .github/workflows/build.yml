@@ -1,0 +1,39 @@
+# This is a basic workflow that is manually triggered
+
+name: Build
+on:
+  push:
+    branches:
+    - main
+    - release/*
+
+env:
+  DOTNET_VERSION: "8.x"
+
+jobs:
+   build: 
+     runs-on: ubuntu-latest
+     
+     defaults:
+       run:
+         working-directory:Evently
+         
+     steps:
+       - uses: actions/checkout@v4
+       - name: Setup .NET
+         uses: actions/setup-dotnet@v4  
+         with:
+           dotnet-version: ${{ env.DOTNET_VERSION}}
+       - name : Restore
+       
+         run: dotnet restore Evently.sln
+       - name : Build
+         run : dotnet build Evently.sln  --configuration Release --no-restore
+       - name: test
+         run : dotnet test Evently.sln --configuration Release --no-restore --no-build
+       - name: publish
+         run: dotnet publish Evently.sln --configuration Release --no-restore --no-build
+  
+
+
+ 
