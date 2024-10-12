@@ -3,6 +3,7 @@ using Evently.Modules.Events.Infrastracture.Database;
 using Evently.Modules.Ticketing.Infrastracture.Database;
 using Evently.Modules.Users.Infrastracture.Database;
 using Microsoft.EntityFrameworkCore;
+using Npgsql;
 
 namespace Evently.Api.Extensions;
 
@@ -20,6 +21,7 @@ internal static  class MigrationExtensions
     private static void ApplyMigration<TDBContext>(IServiceScope scope)
     where TDBContext:DbContext
     {
+      
         using TDBContext context = scope.ServiceProvider.GetRequiredService<TDBContext>();
         context.Database.Migrate();
     }

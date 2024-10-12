@@ -9,6 +9,9 @@
 	<ItemGroup>
 	  <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="8.0.8" />
 	</ItemGroup>
+	<ItemGroup>
+		<InternalInvisibleTo Include="Evently.Modules.IntegrationTests" />
+	</ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Common\Evently.Common.Infrastracture\Evently.Common.Infrastracture.csproj" />

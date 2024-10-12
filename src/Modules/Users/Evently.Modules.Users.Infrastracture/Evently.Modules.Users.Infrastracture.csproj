@@ -13,6 +13,10 @@
     <ProjectReference Include="..\Evently.Modules.Users.PublicApi\Evently.Modules.Users.PublicApi.csproj" />
   </ItemGroup>
 
+	<ItemGroup>
+		<InternalInvisibleTo Include="Evently.Modules.Users.IntegrationTests"/>
+		<InternalInvisibleTo Include="Evently.IntegrationTests"/>
+	</ItemGroup>
   <ItemGroup>
     <Folder Include="Database\" />
     <Folder Include="Authorization\" />

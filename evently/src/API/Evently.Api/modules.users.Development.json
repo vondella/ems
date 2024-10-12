@@ -12,7 +12,7 @@
       "AdminUrl": "http://evently.identity:8080/admin/realms/evently/",
       "TokenUrl": "http://evently.identity:8080/realms/evently/protocol/openid-connect/token",
       "ConfidentialClientId": "evently-confidential-client",
-      "ConfidentialClientSecret": "CEPjMK6NahkckFaphnI9gYs2l3L5qWMZ",
+      "ConfidentialClientSecret": "PzotcrvZRF9BHCKcUxdKfHWlIPECG49k",
       "PublicClientId": "evently-public-client"
     }
   }
