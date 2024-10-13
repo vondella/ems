@@ -1,5 +1,7 @@
 using Carter;
 using Evently.Api.Extensions;
+using Evently.Api.Middleware;
+using Evently.Api.OpenTelemetry;
 using Evently.Common.Application;
 using Evently.Common.Infrastracture;
 using Evently.Modules.Attendance.Infrastracture;
@@ -24,7 +26,8 @@ builder.Services.AddApplication([Evently.Modules.Events.Application.AssemblyRefe
     Evently.Modules.Attendance.Application.AssemblyReference.Assembly]);
 
 
-builder.Services.AddInfrastracture([EventModule.ConfigureConsumers(new MongoConfig
+builder.Services.AddInfrastracture(DiagnosticsConfig.ServiceName, 
+[EventModule.ConfigureConsumers(new MongoConfig
     {
          Database = mongoConfig!.Database,
          Collection = mongoConfig.Collection,
@@ -43,6 +46,7 @@ builder.Services.AddHealthChecks()
     .AddRedis(redisConnectionString);
 
 WebApplication app = builder.Build();
+app.UseLogContextTraceLogging();
 app.UseSerilogRequestLogging();
 app.UseApplication();
 

@@ -15,6 +15,8 @@ using MassTransit;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Npgsql;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
 using Quartz;
 using StackExchange.Redis;
 
@@ -22,7 +24,7 @@ namespace Evently.Common.Infrastracture
 {
     public static class InfrastractureConfiguration
     {
-        public static IServiceCollection AddInfrastracture(this IServiceCollection services, Action<IRegistrationConfigurator>[] moduleConfigureConsumers,
+        public static IServiceCollection AddInfrastracture(this IServiceCollection services,string serviceName, Action<IRegistrationConfigurator>[] moduleConfigureConsumers,
             string connectionString,string redisConnectionString)
         {
             services.AddAuthenticationInternal();
@@ -71,6 +73,19 @@ namespace Evently.Common.Infrastracture
                     cfg.ConfigureEndpoints(context);
                 });
             });
+
+            services.AddOpenTelemetry()
+                .ConfigureResource(resource => resource.AddService(serviceName))
+                .WithTracing(tracing =>
+                {
+                    tracing.AddAspNetCoreInstrumentation()
+                        .AddEntityFrameworkCoreInstrumentation()
+                        .AddRedisInstrumentation()
+                        .AddHttpClientInstrumentation()
+                        .AddNpgsql()
+                        .AddSource(MassTransit.Logging.DiagnosticHeaders.DefaultListenerName);
+                    tracing.AddOtlpExporter();
+                });
 
             return services;
         }

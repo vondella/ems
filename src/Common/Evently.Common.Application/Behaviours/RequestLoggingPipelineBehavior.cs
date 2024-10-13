@@ -2,6 +2,7 @@
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Serilog.Context;
+using System.Diagnostics;
 
 namespace Evently.Common.Application.Behaviours;
 
@@ -15,6 +16,9 @@ internal sealed class RequestLoggingPipelineBehavior<TRequest, TResponse>(
     {
         string moduleName = GetModuleName(typeof(TRequest).FullName!);
         string requestName = typeof(TRequest).Name;
+
+        Activity.Current?.SetTag("request.module", moduleName);
+        Activity.Current?.SetTag("request.name", requestName);
 
         using (LogContext.PushProperty("Module", moduleName))
         {
